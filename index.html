@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body background="./verkeer/kruising.png">
+<form>
+<h1>kruising 3</h1>
+<p>Automatisch werkend stoplicht</p>
+<p>druk op de juiste knop (maar één keer drukken!)</p>
+<input type="button" value="aanzetten" onclick="aanzetten()">
+<input type="button" value="knipperen" onclick="knipperen()">
+<input type="button" value="uitzetten" onclick="uitzetten()">
+<img id="stoplicht" src="./verkeer/stoplichtuit.png" width="20px" height="40px">
+<img id="stoplicht2" src="./verkeer/stoplichtuit2.png" width="20px" height="40px">
+<img id="stoplicht3" src="./verkeer/stoplichtuit3.png" width="40px" height="20px">
+<img id="stoplicht4" src="./verkeer/stoplichtuit4.png" width="40px" height="20px">
+<br>
+<br>
+<form>
+    <input type="button" value="start" onclick="starten()">
+    <input type="button" value="stop" onclick="stop()">
+    <input type="button" value="opnieuw" onclick="opnieuw()">
+    <img id="auto" src="./verkeer/autogroen.png" width="40px" height="80px">
+    <img id="auto2" src="./verkeer/autorood3.png" width="40px" height="80px">
+    <img id="auto3" src="./verkeer/autorood2.png" width="76,8px" height="76,8px">
+    <img id="auto4" src="./verkeer/autoblauw.png" width="80px" height="40px">
+
+    </form>
+</form>
+<script>
+var slir_lr = false; 
+var slir_bb = false
+var werken; // animatie heet 'werken'
+var buitenwerking; // andere animatie heet 'buitenwerking'
+var stoplicht2= document.getElementById('stoplicht2');
+var stoplicht = document.getElementById('stoplicht');
+var stoplicht3 = document.getElementById('stoplicht3');
+var stoplicht4 = document.getElementById('stoplicht4');
+
+stoplicht.style.position = 'absolute';
+stoplicht.style.left = '715px';
+stoplicht.style.top = '510px';
+
+stoplicht2.style.position = 'absolute';
+stoplicht2.style.left = '515px';
+stoplicht2.style.top = '250px'; 
+
+stoplicht3.style.position = 'absolute';
+stoplicht3.style.left = '415px';
+stoplicht3.style.top = '510px'; 
+
+stoplicht4.style.position = 'absolute';
+stoplicht4.style.left = '750px';
+stoplicht4.style.top = '320px'; 
+function aanzetten() {
+clearTimeout(buitenwerking);
+maakRood();
+werken = setTimeout(maakGroen, 4000); // na 4 sec (4000 msec) groen maken
+werken = setTimeout(maakGeel, 8000); // na 8 sec geel maken
+werken = setTimeout(aanzetten, 11000 );// en na 10 sec opnieuw aanzetten
+}
+function knipperen() {
+clearTimeout(werken);
+maakGeel();
+buitenwerking = setTimeout(zetUit, 500 ); // na 500 msec uitzetten
+buitenwerking = setTimeout(knipperen, 1000); // na 500 msec weer knipperen
+}
+function uitzetten() {
+// deze functie zet de animaties van het stoplicht uit
+// dat is anders dan dat de functie zetUit() doet
+zetUit();clearTimeout(buitenwerking);
+clearTimeout(werken);
+}
+function maakRood() {
+stoplicht.src = "./verkeer/stoplichtrood.png";
+stoplicht2.src = "./verkeer/stoplichtrood2.png";
+stoplicht3.src = "./verkeer/stoplichtgroen3.png";
+stoplicht4.src = "./verkeer/stoplichtgroen4.png";
+slir_lr = true;
+slir_bb= false;
+}
+function maakGroen() {
+stoplicht.src = "./verkeer/stoplichtgroen.png";
+stoplicht2.src = "./verkeer/stoplichtgroen2.png";
+stoplicht3.src = "./verkeer/stoplichtrood3.png";
+stoplicht4.src = "./verkeer/stoplichtrood4.png";
+slir_lr = false;
+slir_bb= true;
+
+}
+function maakGeel() {
+stoplicht.src = "./verkeer/stoplichtgeel.png";
+stoplicht2.src = "./verkeer/stoplichtgeel2.png";
+stoplicht3.src = "./verkeer/stoplichtgeel3.png";
+stoplicht4.src = "./verkeer/stoplichtgeel4.png";
+slir_lr = false;
+slir_bb= false;
+
+}
+function zetUit() {
+// deze functie laat het plaatje met alle lampjes uit zien.
+// niet verwarren met de functie uitzetten()
+stoplicht.src = "./verkeer/stoplichtuit.png";
+stoplicht2.src = "./verkeer/stoplichtuit2.png";
+stoplicht3.src = "./verkeer/stoplichtuit3.png";
+stoplicht4.src = "./verkeer/stoplichtuit4.png";
+
+}
+var rijden; // animatie heet 'rijden'
+var auto = document.getElementById('auto'); // object auto gekoppeld aan het plaatje
+auto.style.position = 'absolute';
+auto.style.left = '650px';
+auto.style.top = '800px';
+
+var auto2 = document.getElementById('auto2'); // object auto gekoppeld aan het plaatje
+auto2.style.position = 'absolute';
+auto2.style.left = '550px';
+auto2.style.top = '100px';
+
+var auto3 = document.getElementById('auto3'); // object auto gekoppeld aan het plaatje
+auto3.style.position = 'absolute';
+auto3.style.left = '250px';
+auto3.style.top = '425px';
+
+var auto4 = document.getElementById('auto4'); // object auto gekoppeld aan het plaatje
+auto4.style.position = 'absolute';
+auto4.style.left = '950px';
+auto4.style.top = '380px';
+function starten() {
+let y_auto=parseInt(auto.style.top) // positie van auto terwijl die beweegt
+let y_auto2=parseInt(auto2.style.top) // positie van auto terwijl die beweegt
+let y_auto3=parseInt(auto3.style.left) // positie van auto terwijl die beweegt
+let y_auto4=parseInt(auto4.style.left) // positie van auto terwijl die beweegt
+    if((slir_lr) && (y_auto == 550)) // 550 is vlak voor het stoplicht
+{ snelheid = 0;}
+
+else
+{  snelheid = 5;}
+if((slir_lr) && (y_auto2 == 175)) // 550 is vlak voor het stoplicht
+{ snelheid2 = 0;}
+else
+{  snelheid2 = -5;}
+if((slir_bb) && (y_auto3 == 350)) // 550 is vlak voor het stoplicht
+{ snelheid3 = 0;}
+
+else
+{  snelheid3 = -5;}
+if((slir_bb) && (y_auto4 == 750)) // 550 is vlak voor het stoplicht
+{ snelheid4 = 0;}
+
+else
+{  snelheid4 = 5;}
+
+    auto.style.top = parseInt(auto.style.top) - snelheid + 'px' ;
+    auto2.style.top = parseInt(auto2.style.top) - snelheid2 + 'px' ;
+    auto3.style.left = parseInt(auto3.style.left) - snelheid3 + 'px' ;
+    auto4.style.left = parseInt(auto4.style.left) - snelheid4 + 'px' ;
+   rijden = setTimeout(starten, 10); 
+    if (parseInt(auto.style.top) < -80){
+    auto.style.top = '960px';
+    
+    }
+    if (parseInt(auto2.style.top) > +960){
+    auto2.style.top = '-10px';
+    }
+
+    if (parseInt(auto3.style.left) > 2000){
+    auto3.style.left = '-10px';
+    
+    }
+    if (parseInt(auto4.style.left) < -80){
+    auto4.style.left = '2000px';
+    }
+}
+
+function stop() {
+clearTimeout(rijden);
+}
+function opnieuw() {
+clearTimeout(rijden);
+auto.style.top = '800px';
+auto2.style.top = '100px';
+}
+</script>
+</body>
+</html>
